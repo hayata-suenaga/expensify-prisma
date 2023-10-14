@@ -10,18 +10,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Organization {
+  id       String   @id @default(uuid())
+  name     String
+  domain   String
+  policies Policy[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+model Policy {
+  id   String @id @default(uuid())
+  name String
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  approver User[]
+
+  Report Report[]
+}
+
+model Report {
+  id String @id @default(uuid())
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  policy   Policy @relation(fields: [policyId], references: [id])
+  policyId String
+
+  expenses Expense[]
+}
+
+model Expense {
+  id String @id @default(uuid())
+
+  report   Report? @relation(fields: [reportId], references: [id])
+  reportId String?
+
+  amount    Decimal
+  date      DateTime
+  attendees User[]
+}
+
+model User {
+  id        String @id @default(uuid())
+  email     String @unique
+  firstName String
+  lastName  String
+
+  authoredReports   Report[]
+  policiesToApprove Policy[]
+
+  expenseAttended Expense[]
 }
