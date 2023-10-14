@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setup": "rm prisma/dev.db && rm -rf prisma/migrations && npx prisma migrate dev --name migration-file"
   },
   "keywords": [],
   "author": "",
