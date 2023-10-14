@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "rm prisma/dev.db && rm -rf prisma/migrations && npx prisma migrate dev --name migration-file"
+    "setup": "rm prisma/dev.db && rm -rf prisma/migrations && npx prisma migrate dev --name migration-file",
+    "execute": "npx ts-node script.ts"
   },
   "keywords": [],
   "author": "",
